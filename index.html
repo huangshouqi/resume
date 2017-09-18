@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Archie的动态简历</title>
+	<style>
+	li{list-style:none;}
+	</style>
+</head>
+
+<body>
+<style id="nice"></style> 
+<pre id="content" ></pre>
+<div style="display:none" id="write">
+/*
+* Inspired by http://strml.net/
+* 大家好，我是Archie 
+* 这是一份动态简历！
+*/
+/* 首先给所有元素加上过渡效果 */
+* {
+  transition: all .3s;
+}
+/* 白色背景太单调了，我们来点背景 */
+html {
+  color: rgb(222,222,222); background: rgb(0,43,54);
+}
+/* 文字离边框太近了 */
+#content{
+	border:2px solid #fff;
+	padding:5px 0 5px 10px;
+	width:360px;
+	margin-top:30px;
+	float:left;
+	font-weight:bold;
+	height:520px;
+	overflow-y:scroll;
+	overflow-x:hidden;
+}
+/* 加点3d效果 */
+html{
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+#content{
+  margin-left:10px;
+  -webkit-transition: none; 
+  transition: none;
+  display:inline-block; 
+  left: 10px; top: 40px; 
+  -webkit-transform:  rotateY(15deg) translateZ(-100px) ;
+          transform:  rotateY(15deg) translateZ(-100px) ;
+}
+/* 再来个编辑器吧 */
+#show{
+	float:left;
+	border:2px solid #fff;
+	width:700px;
+	background: #fff;
+	margin: 30px 90px 30px 60px;
+	color: #222
+}
+#info div{
+	margin-left:50px;
+	height:30px;
+	width:260px;
+	line-height:30px;
+	float:left;
+	padding-top: 20px;	
+}
+#name:after{
+	content:"姓名：黄守琪";
+}
+#sex:after{
+	content:"性别：男";
+}
+#garduate:after{
+	content:"学校：皖西学院";
+}
+#email:after{
+	content:"邮箱：shouqi.huang@gmail.com";
+}
+#info #introduce{
+	width:600px;
+	height:60px;
+	line-height:30px;
+}
+#introduce::after{
+	content:"简介：本人学前端已经有近两年,前端很酷炫,所以我爱上了前端,可以说是始于颜值,陷于js,忠于代码。"
+}
+
+.fix{
+	*zoom:1;
+}
+.fix:after{
+	display:block; 
+	content:""; 
+	height:0; 
+	clear:both; 
+	overflow:hidden; 
+	visibility:hidden;
+}
+#myskill:after{
+	content:"技能掌握";
+	color:#000;
+}
+#myproject:after{
+	content:"实践经历";
+	color:#000;
+}
+#myskill,#myproject{
+	margin:10px 0 10px 30px;
+
+}
+#skill li:first-child:after{
+	content:"&#9745 掌握Web开发基本技术(Javascript、HTML、CSS)";
+}
+#skill li:nth-child(2):after{
+	content:"&#9745 
+	了解HTML5/CSS3,了解一些ES6新特性";
+}
+#skill li:nth-child(3):after{
+	content:"&#9745 对前端工程化与模块化开发有一定了解";
+}
+#skill li:nth-child(4):after{
+	content:"&#9745 熟悉基于Web的MVC/MVVM设计模式";
+}
+#skill li:nth-child(5):after{
+	content:"&#9745 使用Vue-cli,Express框架仿制开发过练习项目";
+}
+#skill li:nth-child(6):after{
+	content:"&#9745 CET-4,能借助工具快速阅读技术相关英文API文档";
+}
+#skill li:last-child:after{
+	content:"&#9745 对前端新技术有强烈兴趣,有良好的学习能力和积极的进取心";
+}
+#project li:first-child:after{
+	margin:0 10px 0 15px;
+	content:"&#9733 vue全家桶仿Web整站书城开发"
+	
+}
+#project li:nth-child(2):after{
+	content:"&#9672 使用vue2.0+vue-router+vuex以及开源库mint-ui的部分组件，css预处理器stylus和HTML5本地存储,部分ES6语法"
+}
+#project li:nth-child(3):after{
+	content:"&#9672 预览地址：http://huangshouqi.com/vue-reader.html"
+}
+#project li:nth-child(4):after{
+	content:"&#9672 项目源码：https://github.com/huangshouqi/vue-reader"
+}
+
+/*简历可下载*/
+#myresume:after{
+	content:"简历下载(pdf)"
+}
+#myresume{
+	margin: 0 0 10px 30px;
+	color: #000;
+}
+</div>
+<div id="show">
+<div id="info" class="fix">
+	<div id="name"></div>
+	<div id="sex"></div>
+	<div id="garduate"></div>
+	<div id="email"></div>
+	<div id="introduce"></div>
+</div>
+<div id="clear"></div>
+<h3 id="myskill"></h3>
+<ul id="skill">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<h3 id="myproject"></h3>
+<ul id="project">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+<a href="resume.pdf" download="w3logo" id="myresume"></a>
+</div>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var index=0;
+var timer;
+var word=document.getElementById("write").innerHTML;
+function type(){
+	document.getElementById("content").innerHTML = word.substring(0,index++);
+if(index>word.length){
+clearInterval(timer);
+}
+}
+timer = setInterval(type, 50);
+var styletimer;
+function style(){
+document.getElementById("nice").innerHTML = word.substring(0,index++);
+var scrollTop = $("body")[0].scrollHeight;
+var contentscrollTop = $("#content")[0].scrollHeight;
+$("body").scrollTop(scrollTop);
+$("#content").scrollTop(contentscrollTop);
+if(index>word.length){
+clearInterval(styletimer);
+// clearInterval(scrolltimer);
+}
+}
+styletimer = setInterval(style, 50);
+</script>
+</body>
+</html>
